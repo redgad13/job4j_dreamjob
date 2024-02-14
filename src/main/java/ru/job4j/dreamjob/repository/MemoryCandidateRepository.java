@@ -16,12 +16,12 @@ public class MemoryCandidateRepository implements CandidateRepository {
     private final Map<Integer, Candidate> candidates = new HashMap<>();
 
     private MemoryCandidateRepository() {
-          save(new Candidate(0,"Vadim", "Good guy", LocalDateTime.now()));
-          save(new Candidate(0,"Sergei", "Very good guy", LocalDateTime.now()));
-          save(new Candidate(0,"Sasha", "Bad guy", LocalDateTime.now()));
-          save(new Candidate(0,"Anton", "Bad bad guy", LocalDateTime.now()));
-          save(new Candidate(0,"Valera", "Top notch guy", LocalDateTime.now()));
-          save(new Candidate(0,"Dima", "Asshole", LocalDateTime.now()));
+        save(new Candidate(0, "Vadim", "Good guy", LocalDateTime.now()));
+        save(new Candidate(0, "Sergei", "Very good guy", LocalDateTime.now()));
+        save(new Candidate(0, "Sasha", "Bad guy", LocalDateTime.now()));
+        save(new Candidate(0, "Anton", "Bad bad guy", LocalDateTime.now()));
+        save(new Candidate(0, "Valera", "Top notch guy", LocalDateTime.now()));
+        save(new Candidate(0, "Dima", "Asshole", LocalDateTime.now()));
     }
 
     public static MemoryCandidateRepository getInstance() {

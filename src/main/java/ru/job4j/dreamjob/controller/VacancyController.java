@@ -30,7 +30,7 @@ public class VacancyController {
     }
 
     @PostMapping("/create")
-    public String create (HttpServletRequest request) {
+    public String create(HttpServletRequest request) {
         var title = request.getParameter("title");
         var description = request.getParameter("description");
         vacancyRepository.save(new Vacancy(0, title, description, LocalDateTime.now()));

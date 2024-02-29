@@ -25,6 +25,7 @@
             <table class="table">
                 <thead>
                 <tr>
+                    <th scope="col" style="width: 50px;">Опубликовано</th>
                     <th scope="col">#</th>
                     <th scope="col">Название</th>
                     <th scope="col">Дата создания</th>
@@ -32,8 +33,17 @@
                 </thead>
                 <tbody>
                 <tr th:each="vacancy: ${vacancies}">
+                    <td>
+              <span th:if="${vacancy.visible}">
+                <i class="bi bi-check-square"></i>
+              </span>
+                        <span th:if="${!vacancy.visible}">
+                  <i class="bi bi-square"></i>
+              </span>
+                    </td>
                     <td th:text="${vacancy.id}"/>
-                    <td><a th:text="${vacancy.title}" th:href="@{/vacancies/{vacancyId}(vacancyId=${vacancy.id})}"></a></td>
+                    <td><a th:text="${vacancy.title}" th:href="@{/vacancies/{vacancyId}(vacancyId=${vacancy.id})}"></a>
+                    </td>
                     <td th:text="${vacancy.creationDate}"/>
                 </tr>
                 </tbody>

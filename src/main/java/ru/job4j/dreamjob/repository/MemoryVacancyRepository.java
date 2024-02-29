@@ -20,12 +20,12 @@ public class MemoryVacancyRepository implements VacancyRepository {
     private final Map<Integer, Vacancy> vacancies = new ConcurrentHashMap<>();
 
     private MemoryVacancyRepository() {
-        save(new Vacancy(0, "Intern Java Developer", "just an intern", LocalDateTime.now(), true));
-        save(new Vacancy(0, "Junior Java Developer", "just a junior", LocalDateTime.now(), true));
-        save(new Vacancy(0, "Junior+ Java Developer", "just a junior+", LocalDateTime.now(), true));
-        save(new Vacancy(0, "Middle Java Developer", "just a middle", LocalDateTime.now(), true));
-        save(new Vacancy(0, "Middle+ Java Developer", "just a middle+", LocalDateTime.now(), true));
-        save(new Vacancy(0, "Senior Java Developer", "not just a senior", LocalDateTime.now(), true));
+        save(new Vacancy(0, "Intern Java Developer", "just an intern", LocalDateTime.now(), true, 1));
+        save(new Vacancy(0, "Junior Java Developer", "just a junior", LocalDateTime.now(), true, 2));
+        save(new Vacancy(0, "Junior+ Java Developer", "just a junior+", LocalDateTime.now(), true, 3));
+        save(new Vacancy(0, "Middle Java Developer", "just a middle", LocalDateTime.now(), true, 4));
+        save(new Vacancy(0, "Middle+ Java Developer", "just a middle+", LocalDateTime.now(), true, 5));
+        save(new Vacancy(0, "Senior Java Developer", "not just a senior", LocalDateTime.now(), true, 6));
     }
 
     @Override
@@ -43,7 +43,8 @@ public class MemoryVacancyRepository implements VacancyRepository {
     @Override
     public boolean update(Vacancy vacancy) {
         return vacancies.computeIfPresent(vacancy.getId(),
-                (id, oldVacancy) -> new Vacancy(oldVacancy.getId(), vacancy.getTitle(), vacancy.getDescription(), vacancy.getCreationDate(), vacancy.getVisible())) != null;
+                (id, oldVacancy) -> new Vacancy(oldVacancy.getId(), vacancy.getTitle(), vacancy.getDescription(),
+                        vacancy.getCreationDate(), vacancy.getVisible(), vacancy.getCityId())) != null;
     }
 
     @Override

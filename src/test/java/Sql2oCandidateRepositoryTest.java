@@ -86,7 +86,7 @@ public class Sql2oCandidateRepositoryTest {
     @Test
     public void whenDeleteThenGetEmptyOptional() {
         var creationDate = now().truncatedTo(ChronoUnit.MINUTES);
-        var candidate = sql2oCandidateRepository.save(new Candidate(2, "Vadim", "descriptionSecond", creationDate, 3, file.getId()));
+        var candidate = sql2oCandidateRepository.save(new Candidate(2, "Vadim", "descriptionSecond", creationDate, 2, file.getId()));
         var isDeleted = sql2oCandidateRepository.deleteById(candidate.getId());
         var savedCandidate = sql2oCandidateRepository.findById(candidate.getId());
         assertThat(isDeleted).isTrue();
@@ -115,7 +115,7 @@ public class Sql2oCandidateRepositoryTest {
     @Test
     public void whenUpdateUnExistingCandidateThenGetFalse() {
         var creationDate = now().truncatedTo(ChronoUnit.MINUTES);
-        var candidate = sql2oCandidateRepository.save(new Candidate(2, "Vadim", "descriptionSecond", creationDate, 3, file.getId()));
+        var candidate = new Candidate(2, "Vadim", "descriptionSecond", creationDate, 3, file.getId());
         var isUpdated = sql2oCandidateRepository.update(candidate);
         assertThat(isUpdated).isFalse();
     }

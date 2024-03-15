@@ -22,11 +22,10 @@ public class Sql2oCandidateRepository implements CandidateRepository {
     public Candidate save(Candidate candidate) {
         try (var connection = sql2o.open()) {
             var sql = """
-                    INSERT INTO candidates(id, name, description, creation_date, city_id, file_id)
-                    VALUES (:id, :name, :description, :creationDate, :cityId, :fileId)
+                    INSERT INTO candidates(name, description, creation_date, city_id, file_id)
+                    VALUES (:name, :description, :creationDate, :cityId, :fileId)
                     """;
             var query = connection.createQuery(sql, true)
-                    .addParameter("id", candidate.getId())
                     .addParameter("name", candidate.getName())
                     .addParameter("description", candidate.getDescription())
                     .addParameter("creationDate", candidate.getCreationDate())
@@ -61,6 +60,7 @@ public class Sql2oCandidateRepository implements CandidateRepository {
             var query = connection.createQuery(sql)
                     .addParameter("name", candidate.getName())
                     .addParameter("description", candidate.getDescription())
+                    .addParameter("creationDate", candidate.getCreationDate())
                     .addParameter("cityId", candidate.getCityId())
                     .addParameter("fileId", candidate.getFileId())
                     .addParameter("id", candidate.getId());
@@ -75,7 +75,7 @@ public class Sql2oCandidateRepository implements CandidateRepository {
             var query = connection.createQuery("SELECT * FROM candidates WHERE id = :id");
             query.addParameter("id", id);
             var candidate = query.setColumnMappings(Candidate.COLUMN_MAPPING).executeAndFetchFirst(Candidate.class);
-            return Optional.of(candidate);
+            return Optional.ofNullable(candidate);
         }
     }
 

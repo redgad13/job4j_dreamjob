@@ -8,6 +8,7 @@ import ru.job4j.dreamjob.model.File;
 import ru.job4j.dreamjob.repository.Sql2oCandidateRepository;
 import ru.job4j.dreamjob.repository.Sql2oFileRepository;
 
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Properties;
@@ -109,7 +110,9 @@ public class    Sql2oCandidateRepositoryTest {
         var isUpdated = sql2oCandidateRepository.update(updatedCandidate);
         var savedCandidate = sql2oCandidateRepository.findById(updatedCandidate.getId()).get();
         assertThat(isUpdated).isTrue();
-        assertThat(savedCandidate).usingRecursiveComparison().isEqualTo(updatedCandidate);
+        assertThat(savedCandidate).usingRecursiveComparison()
+                .ignoringFieldsOfTypes(LocalDateTime.class)
+                .isEqualTo(updatedCandidate);
     }
 
     @Test

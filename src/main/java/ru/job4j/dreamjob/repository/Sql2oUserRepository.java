@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class Sql2oUserRepository implements UserRepository {
 
     private final Sql2o sql2o;
-    private static final Logger logger = Logger.getLogger(Sql2oUserRepository.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Sql2oUserRepository.class.getName());
 
     public Sql2oUserRepository(Sql2o sql2o) {
         this.sql2o = sql2o;
@@ -38,7 +38,7 @@ public class Sql2oUserRepository implements UserRepository {
             user.setId(generatedId);
             rsl = Optional.of(user);
         } catch (Sql2oException e) {
-            logger.log(Level.ALL, "Exception occurred");
+            LOGGER.log(Level.ALL, "Exception occurred");
             rsl = Optional.empty();
         }
         return rsl;

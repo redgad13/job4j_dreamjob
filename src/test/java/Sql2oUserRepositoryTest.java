@@ -62,9 +62,8 @@ class Sql2oUserRepositoryTest {
     @Test
     public void doNotAddSameEmail() {
         var user = sql2oUserRepository.save(new User(1, "e-mail", "password"));
-/*
         var user2 = sql2oUserRepository.save(new User(2, "e-mail", "password"));
-*/
+        assertThat(user2).isEmpty();
     }
 
 }

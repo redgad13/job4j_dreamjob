@@ -25,11 +25,11 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(Model model, @ModelAttribute User user) {
-        if (userService.findUserByEmail(user.getEmail()).isPresent()) {
+        var savedUser = userService.save(user);
+        if (savedUser.isEmpty()) {
             model.addAttribute("message", "Пользователь с такой почтой уже существует");
             return "errors/404";
         }
-        userService.save(user);
         return "redirect:/vacancies";
     }
 }

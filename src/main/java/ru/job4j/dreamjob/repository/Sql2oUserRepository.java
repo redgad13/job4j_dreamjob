@@ -25,7 +25,7 @@ public class Sql2oUserRepository implements UserRepository {
 
     @Override
     public Optional<User> save(User user) {
-        Optional<User> rsl;
+        Optional<User> rsl = Optional.empty();
         try (var connection = sql2o.open()) {
             var sql = """
                     INSERT INTO users (email, password)
@@ -39,7 +39,6 @@ public class Sql2oUserRepository implements UserRepository {
             rsl = Optional.of(user);
         } catch (Sql2oException e) {
             LOGGER.log(Level.ALL, "Exception occurred");
-            rsl = Optional.empty();
         }
         return rsl;
     }

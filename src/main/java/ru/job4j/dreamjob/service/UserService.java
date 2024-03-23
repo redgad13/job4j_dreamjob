@@ -8,4 +8,6 @@ public interface UserService {
     Optional<User> save(User user);
 
     Optional<User> findUserByEmail(String email);
+
+    Optional<User> findByEmailAndPassword(String email, String password);
 }

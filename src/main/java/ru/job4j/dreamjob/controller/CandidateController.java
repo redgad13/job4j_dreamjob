@@ -30,6 +30,11 @@ public class CandidateController {
         model.addAttribute("candidates", candidateService.findAll());
         var session = request.getSession();
         var user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("guest");
+        }
+        model.addAttribute("user", user);
         session.setAttribute("user", user);
         return "candidates/list";
     }

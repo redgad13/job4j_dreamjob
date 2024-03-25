@@ -29,6 +29,11 @@ public class VacancyController {
         model.addAttribute("vacancies", vacancyService.findAll());
         var session = request.getSession();
         var user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("guest");
+        }
+        model.addAttribute("user", user);
         session.setAttribute("user", user);
         return "vacancies/list";
     }

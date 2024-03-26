@@ -39,8 +39,16 @@ public class VacancyController {
     }
 
     @GetMapping("/create")
-    public String getCreationPage(Model model) {
+    public String getCreationPage(Model model, HttpServletRequest request) {
         model.addAttribute("cities", cityService.findAll());
+        var session = request.getSession();
+        var user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("guest");
+        }
+        model.addAttribute("user", user);
+        session.setAttribute("user", user);
         return "vacancies/create";
     }
 

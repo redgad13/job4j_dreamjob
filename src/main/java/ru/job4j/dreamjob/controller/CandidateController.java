@@ -49,7 +49,6 @@ public class CandidateController {
             user.setName("guest");
         }
         model.addAttribute("user", user);
-        session.setAttribute("user", user);
         return "candidates/create";
     }
 

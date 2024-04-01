@@ -1,18 +1,12 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.sql2o.Sql2oException;
 import ru.job4j.dreamjob.configuration.DatasourceConfiguration;
-import ru.job4j.dreamjob.model.File;
 import ru.job4j.dreamjob.model.User;
-import ru.job4j.dreamjob.repository.Sql2oCandidateRepository;
-import ru.job4j.dreamjob.repository.Sql2oFileRepository;
 import ru.job4j.dreamjob.repository.Sql2oUserRepository;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Properties;
 
-import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.*;
 
 class Sql2oUserRepositoryTest {
@@ -61,7 +55,6 @@ class Sql2oUserRepositoryTest {
 
     @Test
     public void doNotAddSameEmail() {
-        var user = sql2oUserRepository.save(new User(1, "e-mail", "password"));
         var user2 = sql2oUserRepository.save(new User(2, "e-mail", "password"));
         assertThat(user2).isEmpty();
     }

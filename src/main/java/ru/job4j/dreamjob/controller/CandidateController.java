@@ -9,7 +9,6 @@ import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.CandidateService;
 import ru.job4j.dreamjob.service.CityService;
-import ru.job4j.dreamjob.service.FileService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +19,7 @@ public class CandidateController {
 
     private final CityService cityService;
 
-    public CandidateController(CandidateService candidateService, CityService cityService, FileService fileService) {
+    public CandidateController(CandidateService candidateService, CityService cityService) {
         this.candidateService = candidateService;
         this.cityService = cityService;
     }
@@ -40,7 +39,7 @@ public class CandidateController {
     }
 
     @GetMapping("/create")
-    public String getCreationPage(Model model, HttpServletRequest request) {
+    public String getCreationPage(Model model) {
         model.addAttribute("cities", cityService.findAll());
         return "candidates/create";
     }

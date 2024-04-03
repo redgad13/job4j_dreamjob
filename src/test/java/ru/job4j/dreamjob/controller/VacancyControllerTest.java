@@ -1,3 +1,5 @@
+package ru.job4j.dreamjob.controller;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -5,7 +7,6 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.web.multipart.MultipartFile;
-import ru.job4j.dreamjob.controller.VacancyController;
 import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.model.Vacancy;
@@ -13,7 +14,6 @@ import ru.job4j.dreamjob.service.CityService;
 import ru.job4j.dreamjob.service.VacancyService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +62,6 @@ public class VacancyControllerTest {
         var city2 = new City(2, "Санкт-Петербург");
         var expectedCities = List.of(city1, city2);
         when(cityService.findAll()).thenReturn(expectedCities);
-
         var model = new ConcurrentModel();
         var view = vacancyController.getCreationPage(model, request);
         var actualVacancies = model.getAttribute("cities");
@@ -78,12 +77,10 @@ public class VacancyControllerTest {
         var vacancyArgumentCaptor = ArgumentCaptor.forClass(Vacancy.class);
         var fileDtoArgumentCaptor = ArgumentCaptor.forClass(FileDto.class);
         when(vacancyService.save(vacancyArgumentCaptor.capture(), fileDtoArgumentCaptor.capture())).thenReturn(vacancy);
-
         var model = new ConcurrentModel();
         var view = vacancyController.create(vacancy, testFile, model);
         var actualVacancy = vacancyArgumentCaptor.getValue();
         var actualFileDto = fileDtoArgumentCaptor.getValue();
-
         assertThat(view).isEqualTo("redirect:/vacancies");
         assertThat(actualVacancy).isEqualTo(vacancy);
         assertThat(fileDto).usingRecursiveComparison().isEqualTo(actualFileDto);
@@ -120,10 +117,21 @@ public class VacancyControllerTest {
     }
 
     @Test
-    public void whenUpdateVacancyIsOK() throws IOException {
+    public void whenUpdateVacancyIsOK() {
         var vacancy1 = new Vacancy(1, "test1", "desc1", now(), true, 1, 2);
         var model = new ConcurrentModel();
-        when(vacancyService.update(vacancy1, new FileDto(testFile.getOriginalFilename(), testFile.getBytes()))).thenReturn(true);
+        var vacancyArgumentCaptor = ArgumentCaptor.forClass(Vacancy.class);
+        var fileDtoArgumentCaptor = ArgumentCaptor.forClass(FileDto.class);
+        when(vacancyService.update(vacancyArgumentCaptor.capture(), fileDtoArgumentCaptor.capture())).thenReturn(true);
         assertThat(vacancyController.update(vacancy1, testFile, model)).isEqualTo("redirect:/vacancies");
+    }
+
+    @Test
+    public void whenDeleteIsOK() {
+        var vacancy = new Vacancy(1, "test1", "desc1", now(), true, 1, 2);
+        var model = new ConcurrentModel();
+        var id = vacancy.getId();
+        when(vacancyService.deleteById(id)).thenReturn(true);
+        assertThat(vacancyController.delete(model, id)).isEqualTo("redirect:/vacancies");
     }
 }
